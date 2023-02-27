@@ -6,7 +6,9 @@ class FRButton {
   FRButton();
   FRButton(int pinNumber);
   FRButton(int pinNumber, bool _inverted);
-
+  
+  void SetPinNumber(int pinNumber);
+  
   bool GetState();
   bool HasChanged();
   bool HasChangedUp();

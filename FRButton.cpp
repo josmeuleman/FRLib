@@ -21,6 +21,11 @@ FRButton::FRButton(int pinNumber, bool inverted) {
   pinMode(pinNumber, INPUT);
 }
 
+void FRButton::SetPinNumber(int pinNumber) {
+  _pinNumber = pinNumber;
+  pinMode(_pinNumber, INPUT);
+}
+
 bool FRButton::GetState() {
   _isPushed = _inverted ^ digitalRead(_pinNumber);
   return _isPushed;
