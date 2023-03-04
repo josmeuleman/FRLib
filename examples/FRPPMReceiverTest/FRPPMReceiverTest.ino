@@ -1,11 +1,16 @@
 // Testscript for reading PPM signals on the Flight Recorder Board
-// Testscript is developed for a Turnigy TGY IA6B controller
+// Required hardware:
+// - 1x Turnigy TGY IA6B Receiver programmed in PPL mode
+// - 1x Tunigy TGY-i6S Controller programmed in PPL mode
+// - 3x breadboard cables female-male
 // Connections:
 // - TGY channel PPM, pin 1 - FR Board, PPL2 GND
 // - TGY channel PPM, pin 2 - FR Board, PPL2, D4
 // - TGY channel PPM, pin 3 - FR Board, SD card reader, 5V (or connected to other 5V source)
+// Required libraries:
+// - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
 //
-// 2023-03-02, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-04, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 #include <FRPPMReceiver.h>
 

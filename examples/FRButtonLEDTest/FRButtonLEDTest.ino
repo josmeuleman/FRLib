@@ -4,8 +4,9 @@
 // Connections:
 // - None (all wired on PCB)
 // Required libraries:
-// - FRLib (download from )
-// 2023-02-20, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
+//
+// 2023-03-04, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 #include "FRLED.h"
 #include "FRButton.h"	
