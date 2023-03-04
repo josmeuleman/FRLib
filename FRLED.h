@@ -1,10 +1,10 @@
 #ifndef FRLED_h
 #define FRLED_h
 
-class FRLED {
+class LED {
   public:
-  FRLED();
-  FRLED(int pinNumber);
+  LED();
+  LED(int pinNumber);
 
   void SetPinNumber(int pinNumber);
   //void SetBlinkMode(int* blinkPattern);

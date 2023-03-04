@@ -1,50 +1,50 @@
 #include "Arduino.h"
 #include "FRButton.h"
 
-FRButton::FRButton() {
+Button::Button() {
   _pinNumber = -1;
   _isPushed = false;
   _inverted = false;
 }
 
-FRButton::FRButton(int pinNumber) {
+Button::Button(int pinNumber) {
   _pinNumber = pinNumber;
   _isPushed = false;
   _inverted = false;
   pinMode(pinNumber, INPUT);
 }
 
-FRButton::FRButton(int pinNumber, bool inverted) {
+Button::Button(int pinNumber, bool inverted) {
   _pinNumber = pinNumber;
   _isPushed = false;
   _inverted = inverted;
   pinMode(pinNumber, INPUT);
 }
 
-void FRButton::SetPinNumber(int pinNumber) {
+void Button::SetPinNumber(int pinNumber) {
   _pinNumber = pinNumber;
   pinMode(_pinNumber, INPUT);
 }
 
-bool FRButton::GetState() {
+bool Button::Update() {
+  _prevState = _isPushed;
   _isPushed = _inverted ^ digitalRead(_pinNumber);
   return _isPushed;
 }
-
-bool FRButton::HasChanged() {
-  bool oldState = _isPushed;
-  _isPushed = GetState();
-  return _isPushed ^ oldState;
+bool Button::GetState() {
+  return _isPushed;
 }
 
-bool FRButton::HasChangedUp() {
-  bool oldState = _isPushed;
-  _isPushed = GetState();
-  return _isPushed > oldState;
+bool Button::HasChanged() {
+  return _isPushed ^ _prevState;
 }
 
-bool FRButton::HasChangedDown() {
-  bool oldState = _isPushed;
+bool Button::HasChangedUp() {
   _isPushed = GetState();
-  return _isPushed < oldState;
+  return _isPushed > _prevState;
+}
+
+bool Button::HasChangedDown() {
+  _isPushed = GetState();
+  return _isPushed < _prevState;
 }

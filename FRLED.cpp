@@ -1,14 +1,14 @@
 #include "Arduino.h"
 #include "FRLED.h"
 
-FRLED::FRLED() {
+LED::LED() {
   _pinNumber = -1;
   _isOn = false;
   _lastTimeMS = 0;
   _blinkPattern = NULL;
 }
 
-FRLED::FRLED(int pinNumber) {
+LED::LED(int pinNumber) {
   _pinNumber = pinNumber;
   _isOn = false;
   _lastTimeMS = 0;
@@ -16,25 +16,25 @@ FRLED::FRLED(int pinNumber) {
   pinMode(_pinNumber, OUTPUT);
 }
 
-void FRLED::SetPinNumber(int pinNumber) {
+void LED::SetPinNumber(int pinNumber) {
   _pinNumber = pinNumber;
   pinMode(_pinNumber, OUTPUT);
 }
 
-void FRLED::SetState(bool state) {
+void LED::SetState(bool state) {
   digitalWrite(_pinNumber, state);
 }
-void FRLED::SetOn() {
+void LED::SetOn() {
   _isOn = true;
   SetState(_isOn);
 }
 
-void FRLED::SetOff() {
+void LED::SetOff() {
   _isOn = false;
   SetState(_isOn);
 }
 
-void FRLED::Toggle() {
+void LED::Toggle() {
   _isOn = !_isOn;
   SetState(_isOn);
 }

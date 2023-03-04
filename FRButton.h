@@ -1,14 +1,15 @@
 #ifndef FRButton_h
 #define FRButton_h
 
-class FRButton {
+class Button {
   public:
-  FRButton();
-  FRButton(int pinNumber);
-  FRButton(int pinNumber, bool _inverted);
+  Button();
+  Button(int pinNumber);
+  Button(int pinNumber, bool _inverted);
   
   void SetPinNumber(int pinNumber);
   
+  bool Update();
   bool GetState();
   bool HasChanged();
   bool HasChangedUp();
@@ -18,6 +19,7 @@ class FRButton {
   int _pinNumber;
   bool _isPushed;
   bool _inverted;
+  bool _prevState;
 
 
 };
