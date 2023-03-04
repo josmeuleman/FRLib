@@ -22,9 +22,6 @@
 
 #include <ESP32Servo.h>
 
-// Published values for SG90 servos; adjust if needed
-int minUs = 1000;
-int maxUs = 2000;
 
 const int PINAD[2] = {34, 35};
 const int PINSERVO[2] = {25, 26};

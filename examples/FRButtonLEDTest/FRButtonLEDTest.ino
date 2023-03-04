@@ -4,7 +4,7 @@
 // Connections:
 // - None (all wired on PCB)
 // Required libraries:
-// - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
+// - FRLib (download the zip from https://github.com/josmeuleman/FRLib)
 //
 // 2023-03-04, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
@@ -31,8 +31,8 @@ void setup() {
 //---------------------------------------------------------------------------------------------------------
 void loop() {
   // Checks if the button has changed from not pushed to pushed
-  myButton.Update();
-  if (myButton.HasChangedUp()){
+  myButton.Update(); // Read the state of the button
+  if (myButton.HasChangedUp()) { //Check if the state has changed from low to high
     Serial.println("toggle");
     myLed.Toggle(); // Change the state of the led
   }
