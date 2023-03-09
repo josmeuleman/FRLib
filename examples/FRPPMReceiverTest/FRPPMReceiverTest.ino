@@ -27,12 +27,20 @@ PPMReceiver MyReceiver(PINPPM, NUMBEROFCHANNELS);  // Create a PPM receiver obje
 float channelValues[NUMBEROFCHANNELS];
 int counter = 0;  //Measurement counter
 
+//---------------------------------------------------------------------------------------------------------
+// SETUP
+// This block of code is only run once at the beginning
+//---------------------------------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
   MyReceiver.SetLowPassFilter(filterValues);  //apply the filter settings
 }
 
+//---------------------------------------------------------------------------------------------------------
+// LOOP
+// This block of code is looped infinitely
+//---------------------------------------------------------------------------------------------------------
 void loop() {
   MyReceiver.Update();
   if (counter > PRINTLOOP) {                      // only print when the counter exceeds the printloop value
