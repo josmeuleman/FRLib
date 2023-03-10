@@ -1,6 +1,4 @@
 // Testscript for reading testing GPS raw data on the Flight Recorder Board
-// With this script, only raw information from the GPS is plotted
-// For GPS time, position and speed, more programming is needed
 // Required hardware:
 // - 1x GPS Sensor + Antenna (GY-GPSV3-NEO)
 // Connections:
@@ -8,6 +6,19 @@
 // Required libraries:
 // - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
 // - TinyGPSPlus
+// Note:
+// With this script, only raw information from the GPS is plotted
+// For GPS time, position and speed, more programming is needed
+// The raw message, when the GPS makes connection, when no satellites are found, looks like:
+// $GNRMC,,V,,,,,,,,,,N*4D
+// $GNVTG,,,,,,,,,N*2E
+// $GNGGA,,,,,,0,00,99.99,,,,,,*56
+// $GNGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*2E
+// $GNGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*2E
+// $GPGSV,1,1,00*79
+// $GLGSV,1,1,00*65
+// $GNGLL,,,,,,V,N*7A
+// Message length: 225
 //
 // 2023-03-09, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
