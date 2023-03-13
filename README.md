@@ -24,7 +24,7 @@ Class: LED
 	void SetOff();
 	void Toggle();
 	
-FRPPMReceiver
+FRPPMReceiver:
 Class: PPMReceiver
 	PPMReceiver(int pinNumber, int numberOfChannels);
 	void SetLowPassFilter(float* alphaValues);
@@ -32,15 +32,18 @@ Class: PPMReceiver
 	void Update();
 	float ReadChannel(int ChannelNumber);
 
-FRTimer	
+FRTimer:
 Class Timer
-  Timer();
-  Timer(uint32_t loopTimeMS);
-  void SetLoopTime(uint32_t loopTimeMS);
-  void Start();
-  bool WaitUntilEnd();
-  long GetLoopDuration();
-  bool IsTimeFor();
+	Timer();
+	Timer(uint32_t loopTimeMS);
+	void SetLoopTime(uint32_t loopTimeMS);
+	void Start();
+	bool WaitUntilEnd();
+	long GetLoopDuration();
+	bool IsTimeFor();
   
-FRGeneric
+FRGeneric:
+String createTimeString(int hour, int minute, int second)
+String createDateString(int year, int month, int day)
+float mapf(float x, float in_min, float in_max, float out_min, float out_max)
   
