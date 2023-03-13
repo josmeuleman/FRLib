@@ -18,3 +18,10 @@ SetLowPassFilter	KEYWORD2
 GetLowPassFilter 	KEYWORD2
 Update			KEYWORD2
 ReadChannel		KEYWORD2
+
+Timer			KEYWORD1
+SetLoopTime		KEYWORD2
+Start			KEYWORD2
+WaitUntilEnd	KEYWORD2
+GetLoopDuration	KEYWORD2
+IsTimeFor		KEYWORD2

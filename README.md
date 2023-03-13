@@ -31,3 +31,16 @@ Class: PPMReceiver
 	float GetLowPassFilter(int channel);
 	void Update();
 	float ReadChannel(int ChannelNumber);
+
+FRTimer	
+Class Timer
+  Timer();
+  Timer(uint32_t loopTimeMS);
+  void SetLoopTime(uint32_t loopTimeMS);
+  void Start();
+  bool WaitUntilEnd();
+  long GetLoopDuration();
+  bool IsTimeFor();
+  
+FRGeneric
+  
