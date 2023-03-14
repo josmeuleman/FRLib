@@ -32,14 +32,28 @@ bool Timer::WaitUntilEnd() {
   _loopDuration = tNow - _startTime;
   if (_loopDuration > _loopTimeMS) {
     _hasOverRun = true;
-  } else {
+  } 
+  else {
     while (millis() < _startTime + _loopTimeMS) {}
     _hasOverRun = false;
   }
-  //_startTime = millis();
+  _startTime = millis();
   return _hasOverRun;
 }
 
 long Timer::GetLoopDuration(){
   return _loopDuration;
+}
+	
+bool Timer::LoopTimePassed(){
+  long tNow = millis();
+  _loopDuration = tNow - _startTime;
+  if (_loopDuration >= _loopTimeMS) {
+	_startTime = millis();
+	return true;
+  }
+  else {
+	return false;
+  }
+  
 }

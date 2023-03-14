@@ -24,4 +24,4 @@ SetLoopTime		KEYWORD2
 Start			KEYWORD2
 WaitUntilEnd	KEYWORD2
 GetLoopDuration	KEYWORD2
-IsTimeFor		KEYWORD2
+LoopTimePassed	KEYWORD2

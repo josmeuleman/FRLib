@@ -40,7 +40,7 @@ Class Timer
 	void Start();
 	bool WaitUntilEnd();
 	long GetLoopDuration();
-	bool IsTimeFor();
+	bool LoopTimePassed();
   
 FRGeneric:
 String createTimeString(int hour, int minute, int second)

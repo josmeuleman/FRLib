@@ -11,7 +11,7 @@ class Timer{
   void Start();
   bool WaitUntilEnd();
   long GetLoopDuration();
-  bool IsTimeFor();
+  bool LoopTimePassed();
 
 
   private:
