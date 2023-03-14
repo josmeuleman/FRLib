@@ -1,4 +1,4 @@
-// Testscript for testing the analog input on the Flight Recorder PCB
+// Testscript OverSampling & Timers on the Flight Recorder PCB
 // Required hardware:
 // - 1x potmeter
 // - 6x breadboard cables female-male
@@ -13,10 +13,9 @@
 
 #include <FRTimer.h>
 
-const int PINAD = 34;  // Analog input pin number
-
-const int LOOPTIMEREADMS = 100;    // Loop time for reading the AD channel in milliseconds
-const int LOOPTIMEPRINTMS = 1000;  // Loop time for printing average values to the Serial monitor
+const int PINAD = 34;               // Analog input pin number
+const int LOOPTIMEREADMS = 100;     // Loop time for reading the AD channel in milliseconds
+const int LOOPTIMEPRINTMS = 1000;   // Loop time for printing average values to the Serial monitor
 
 Timer myFastTimer(LOOPTIMEREADMS);
 Timer mySlowTimer(LOOPTIMEPRINTMS);
@@ -43,9 +42,9 @@ void loop() {
     sumAnalogValues = 0;  //Reset the sum value
   }
   Serial.print("CurrentValue:");
-  Serial.print(analogValue);  // Print the value
+  Serial.print(analogValue);  // Print the current value
   Serial.print("; AverageValue:");
-  Serial.println(averageValue);
+  Serial.println(averageValue); // Print the last average value
   if (myFastTimer.WaitUntilEnd()) {
     Serial.println("Overrun!");
   }
