@@ -1,15 +1,13 @@
-// Testscript OverSampling & Timers on the Flight Recorder PCB
+// Demoscript for time recording for Flight Recorder PCB
 // Required hardware:
-// - 1x potmeter
-// - 6x breadboard cables female-male
+// - 1x GPS Sensor + Antenna (GY-GPSV3-NEO)
 // Connections:
-// - Potmeter1, GND - Analog Input J6, GND
-// - Potmeter1, Wiper - Analog Input J6, D35
-// - Potmeter1, VCC - Analog Input J6, 3.3V
+// - GPS mounted on board
 // Required libraries:
 // - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
+// - TinyGPSPlus
 //
-// 2023-03-14, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-16, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 #include <HardwareSerial.h>
 #include <TinyGPSPlus.h>
 #include <FRGeneric.h>
@@ -17,11 +15,19 @@
 HardwareSerial SerialGPS(2);  // The serial connection to the GPS device
 TinyGPSPlus gps;
 
+//---------------------------------------------------------------------------------------------------------
+// SETUP
+// This block of code is only run once at the beginning
+//---------------------------------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);     // Start the serial communciation
   SerialGPS.begin(9600);
 }
 
+//---------------------------------------------------------------------------------------------------------
+// LOOP
+// This block of code is looped infinitely
+//--------------------------------------------------------------------------------------------------------
 void loop() {
   long tMillis = millis();
 
@@ -33,5 +39,4 @@ void loop() {
   
   Serial.println();
   delay(1000);
-
 }
