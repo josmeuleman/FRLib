@@ -29,9 +29,8 @@ void loop() {
     gps.encode(SerialGPS.read());
   }
   Serial.printf("The time since startup in milliseconds: %d; ", tMillis);
-  Serial.printf("The time of the GPS sensor: %s ;",createTimeString(gps.time.hour(), gps.time.minute(), gps.time.second()));
-  Serial.printf("Number of satellites: %d", gps.satellites.value());
- 
+  Serial.printf("The time of the GPS sensor: %s",createTimeString(gps.time.hour(), gps.time.minute(), gps.time.second()));
+  
   Serial.println();
   delay(1000);
 
