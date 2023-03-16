@@ -1,4 +1,4 @@
-// Testscript OverSampling & Timers on the Flight Recorder PCB
+// Demoscript for Timer for  Flight Recorder PCB
 // Required hardware:
 // - 1x GPS Sensor + Antenna (GY-GPSV3-NEO)
 // Connections:
