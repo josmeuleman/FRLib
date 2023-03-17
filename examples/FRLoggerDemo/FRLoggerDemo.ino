@@ -1,15 +1,20 @@
-// Testscript OverSampling & Timers on the Flight Recorder PCB
+// Testscript for Recording MPU and analog data to an SD card for  Flight Recorder PCB
 // Required hardware:
-// - 1x potmeter
-// - 6x breadboard cables female-male
+// - 1x Flight Recorder Board with ESP32
+// - 1x MPU6050
+// - 1x SD Card reader
+// - 1x Potmeter
 // Connections:
 // - Potmeter1, GND - Analog Input J6, GND
 // - Potmeter1, Wiper - Analog Input J6, D35
 // - Potmeter1, VCC - Analog Input J6, 3.3V
+// - GPS mounted on board
+// - SD card reader mounted on board
 // Required libraries:
 // - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
+// - Adafruit_MPU6050.h
 //
-// 2023-03-14, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-17, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 
 #include <FRTimer.h>
