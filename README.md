@@ -134,3 +134,11 @@ Read the Serial2 port and prints the data to the Serial monitor. Useful for chec
 **FRMPU6050Test.ino**
 
 Sets up communication to the MPU6050 over I2C
+
+**FRServoAnalogReadTest.ino**
+
+Uses ESP32Servo library for controlling servo's with the analog input.
+
+**FRTimeDemo.ino**
+
+Demonstrates the uses of millis() and the duration of print statements.
