@@ -1,3 +1,7 @@
+// Manager for a MPU6050 sensor. It uses the SensorManager class, such that the Logger class can log the sensor.
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #ifndef FRMPU6050Manager_h
 #define FRMPU6050Manager_h
 
@@ -7,16 +11,16 @@
 
 //creates class which inherents Sensor
 class MPU6050Manager : public SensorManager {
-  public : 
-  Adafruit_MPU6050* _myMPU; // Pointer to the sensor object
-  const int MPU6050_ADDRESS = 0x68; // The I2C address of the MPU6050 sensor
-  
+  public :
   MPU6050Manager();
   ~MPU6050Manager(); // Add a destructor
-  bool InitI2C(TwoWire &myWire);
+  bool Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu6050_gyro_range_t gyroRange);
   String HeaderString() override;
   String SensorString() override;
 
+  private : 
+  Adafruit_MPU6050* _myMPU; // Pointer to the sensor object
+  const int MPU6050_ADDRESS = 0x68; // The I2C address of the MPU6050 sensor
 };
 
 #endif

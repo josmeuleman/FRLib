@@ -1,3 +1,7 @@
+// Manager for a MPU6050 sensor. It uses the SensorManager class, such that the Logger class can log the sensor.
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #include "FRMPU6050Manager.h"
 #include "FRGeneric.h"
 
@@ -10,14 +14,16 @@ MPU6050Manager::~MPU6050Manager(){
   delete _myMPU; // Free the memory for the object
 }
 
-bool MPU6050Manager::InitI2C(TwoWire &myWire){
+bool MPU6050Manager::Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu6050_gyro_range_t gyroRange){
 
   if (!_myMPU->begin(MPU6050_ADDRESS, &myWire)) {
-    Serial.println("Error communicating with MPU6050");
+    //Serial.println("Error communicating with MPU6050");
     return false;
   }
   else {
-    Serial.println("MPU6050 found!");
+    //Serial.println("MPU6050 found!");
+	_myMPU.setAccelerometerRange(accelRange);
+	_myMPU.setGyroRange(gyroRange);
 	return true;
   }
 }
