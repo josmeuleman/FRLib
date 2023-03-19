@@ -1,7 +1,7 @@
 #ifndef FRMPU6050Manager_h
 #define FRMPU6050Manager_h
 
-#include <FRSensor.h>
+#include <FRSensorManager.h>
 #include <Adafruit_MPU6050.h>  // include the library for the MPU6050 sensor
 #include <Wire.h>
 
