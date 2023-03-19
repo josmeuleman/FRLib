@@ -13,6 +13,9 @@ Usage and methods:
 	String createIntString(int value)
 	float mapf(float x, float in_min, float in_max, float out_min, float out_max) 
 
+All generated strings are ended with a "; ". This is conventient for plotting signals in the Serial monitor, and for writing to a csv file.
+
+
 ## FRButton
 
 The class button is allows for monitoring binary sensors such as buttons. 
