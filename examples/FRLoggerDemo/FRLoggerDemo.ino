@@ -46,8 +46,6 @@ AnalogInputManager myAnalog1(PINAD, "AlphaVane[deg]");
 // This block of code is only run once at the beginning
 //---------------------------------------------------------------------------------------------------------
 void setup() {
-  myLed.SetOn();
-
   Serial.begin(9600);     // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
