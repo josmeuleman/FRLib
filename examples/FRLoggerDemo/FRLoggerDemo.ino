@@ -21,8 +21,8 @@
 #include <FRLogger.h>
 #include <FRLED.h>
 #include <FRButton.h>
-#include <FRMPU6050Manager.h> //Use a custom library, that internally initializes and logs the MPU6050
-//#include <Adafruit_MPU6050.h>  
+#include <FRMPU6050Manager.h> //Use a custom library that internally initializes and logs the MPU6050 so you don't need #include <Adafruit_MPU6050.h>  
+#include <FRAnalogInputManager.h>
 
 
 const int I2C_SDA = 33;                 // The data pin for I2C communication
@@ -38,7 +38,8 @@ Logger myLogger;                        // Logger object for logging sensors to 
 Button myButton(PINSWITCH, true);       // Create a button object with the given pin. True for an inverted button, false for a normal button
 LED myLed(PINLED);                      // Create a led object with the given pin.
 MPU6050Manager myMPU;                   // Make an object for the sensor manager for the MPU6050 (accelerometer and gyro)
-int analogValue; 
+AnalogInputManager myAnalog1(PINAD, "AlphaVane[deg]");            
+
 
 //---------------------------------------------------------------------------------------------------------
 // SETUP
@@ -55,6 +56,8 @@ void setup() {
   } else {
     Serial.println("No SD card found.");
   }
+  myAnalog1.SetOutputRange(-135.0, 135.0);
+  myLogger.AddSensor(&myAnalog1); // Add the analog sensor to the logger. the "&" means that the logger watches the address of the analog sensor 
   myLogger.AddSensor(&myMPU);
 
   myTimer.Start();
@@ -66,9 +69,6 @@ void setup() {
 // This block of code is looped infinitely
 //---------------------------------------------------------------------------------------------------------
 void loop() {
-  // Loop through the two pins
-  analogValue = analogRead(PINAD);  // Read the analog input
-
   myButton.Update();              // Read the state of the button
 
   if (myButton.HasChangedUp()) {  //Check if the state has changed from low to high
