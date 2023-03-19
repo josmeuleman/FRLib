@@ -48,9 +48,12 @@ Usage and Methods:
 	void SetOn();
 	void SetOff();
 	void Toggle();
+    void SetBlink(int OnTimeMS, int OffTimeMS);
+    void Update();	
 	
 Examples:
 - FRButtonLEDTest.ino
+- FRButtonLEDBlinkingTest.ino
 
 ## FRPPMReceiver
 The PPMReceiver class creates a listener to a PPM signal.
