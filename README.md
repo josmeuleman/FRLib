@@ -1,7 +1,17 @@
 # FRLib
- FlightRecorder Library for Arduino IDE. This library contains sublibraries and examples for making a flight recorder for an ESP32.
- The library is written for the Project2.2 for Aeronautical & Precision Engineerring at Inholland, Delft.
- 
+FlightRecorder Library for Arduino IDE. This library contains sublibraries and examples for making a flight recorder for an ESP32.
+The library is written for the Project2.2 for Aeronautical & Precision Engineerring at Inholland, Delft.
+
+## FRGeneric
+Generic functions for several sub libraries
+Usage and methods:
+
+	#include <FRGeneric.h>
+	String createTimeString(int hour, int minute, int second)
+	String createDateString(int year, int month, int day)
+	String createFloatString(float value, unsigned int accuracy)
+	String createIntString(int value)
+	float mapf(float x, float in_min, float in_max, float out_min, float out_max) 
 
 ## FRButton
 
@@ -25,6 +35,7 @@ Usage and Methods:
 The class LED is allows for controlling binary outputs such as LEDs. 
 Usage and Methods:
 
+	#include <FRLED.h>
 	LED();
 	LED(int pinNumber);	
 	void SetPinNumber(int pinNumber);
@@ -40,15 +51,21 @@ FRButtonLEDTest.ino
 The PPMReceiver creates a listener to a PPM signal.
 Usage and Methods:
 
-    PPMReceiver(int pinNumber, int numberOfChannels);
+    #include <FRPPMReceiver.h>
+	PPMReceiver(int pinNumber, int numberOfChannels);
     void SetLowPassFilter(float* alphaValues);
     float GetLowPassFilter(int channel);
     void Update();
     float ReadChannel(int ChannelNumber);
-Examples:
 
-FRTimer:
-Class Timer
+Examples:
+FRPPMReceiverTest.ino
+
+## FRTimer
+The Timer creates a timer object that uses the millis() command to ensure timing accurate timing of a loop
+Usage and Methods:
+	
+	#include  
 	Timer();
 	Timer(uint32_t loopTimeMS);
 	void SetLoopTime(uint32_t loopTimeMS);
@@ -57,9 +74,10 @@ Class Timer
 	long GetLoopDuration();
 	bool LoopTimePassed();
   
-FRGeneric:
-String createTimeString(int hour, int minute, int second)
-String createDateString(int year, int month, int day)
-float mapf(float x, float in_min, float in_max, float out_min, float out_max)
+Examples:
+FRTimerDemo.ino
+FRTimerAndOverSamplingDemo.ino
   
+
+
 
