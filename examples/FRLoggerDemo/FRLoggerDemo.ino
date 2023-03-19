@@ -46,21 +46,21 @@ AnalogInputManager myAnalog1(PINAD, "AlphaVane[deg]");
 // This block of code is only run once at the beginning
 //---------------------------------------------------------------------------------------------------------
 void setup() {
+  myLed.SetOn();
+
   Serial.begin(9600);     // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
   
   // The Wire connection must be made before initializing the MPU
   if (!myMPU.Init(Wire, MPU6050_RANGE_4_G, MPU6050_RANGE_500_DEG)) {
-    Serial.println("MPU not found!");
-    ErrorBlink();
+    Error("MPU not found!");
   }
 
   pinMode(PINAD, INPUT);  // Assign the pin for input
 
   if (!myLogger.CheckSD()) {
-    Serial.println("No SD card found!");
-    ErrorBlink();
+    Error("No SD card found!");
   }
   
   myAnalog1.SetOutputRange(-135.0, 135.0);
@@ -83,8 +83,7 @@ void loop() {
     if (!myLogger.IsLogging()) { // Start logging
       Serial.println("Start logging");
       if (!myLogger.StartLogger()) {
-        Serial.println("Something went wrong with the start of the log");
-        ErrorBlink();
+        Error("Something went wrong with the start of the log");
       }
       else {
         myLed.SetOn();
@@ -94,8 +93,7 @@ void loop() {
     } else {// Stop logging
       Serial.println("Stop logging");
       if (!myLogger.StopLogger()) {
-        Serial.println("Something went wrong with the stopping of the log");
-        ErrorBlink();
+        Error("Something went wrong with the stopping of the log");
       }
       else {
         myLed.SetOff();
@@ -113,6 +111,11 @@ void loop() {
   }
 }
 
-void ErrorBlink(){
+//---------------------------------------------------------------------------------------------------------
+// FUNCTIONS
+// Here the custom functions are defined
+//---------------------------------------------------------------------------------------------------------
+void Error(String errorMessage){
+  Serial.println(errorMessage);
   myLed.SetBlink(100, 100);
 }
