@@ -1,3 +1,7 @@
+// Class for binary outputs such as LEDs
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #ifndef FRLED_h
 #define FRLED_h
 
