@@ -1,3 +1,7 @@
+// Generic functions for FRLib
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #ifndef FRGeneric_h
 #define FRGeneric_h
 #include <cstdio>
