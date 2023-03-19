@@ -1,9 +1,13 @@
+// Generic functions for FRLib
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #ifndef FRLogger_h
 #define FRLogger_h
 
 #include <SD.h>  // include the library for the SD card
 #include <FS.h>  // include the library for writing files
-#include <FRSensor.h> //has access to the virtual functions of the sensor class
+#include <FRSensorManager.h> //has access to the virtual functions of the sensor class
 #include <vector>
 
 
