@@ -10,7 +10,7 @@
 // Required libraries:
 // - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
 //
-// 2023-03-04, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 #include <FRPPMReceiver.h>
 
@@ -53,13 +53,12 @@ void loop() {
     counter = 0;         // Reset the counter
   }
 
-  // Do
+  // Do something with the signals
   if (channelValues[4] > 0) {
     digitalWrite(LED_BUILTIN, HIGH);
   } else {
     digitalWrite(LED_BUILTIN, LOW);
   }
-
 
   counter++;
 }
