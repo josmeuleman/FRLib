@@ -1,5 +1,9 @@
-#ifndef Sensor_h
-#define Sensor_h
+// Generic SensorManager for the Logger in FRLib
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
+#ifndef FRSensorManager_h
+#define FRSensorManager_h
 
 #include "WString.h"
 
