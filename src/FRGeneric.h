@@ -27,7 +27,7 @@ String createFloatString(float value, unsigned int accuracy){
 String createIntString(int value) {
   String myString = String(value);
   myString.concat("; ");
-  return myStrin  
+  return myString;  
 }
 
 float mapf(float x, float in_min, float in_max, float out_min, float out_max) {
