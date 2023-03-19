@@ -68,7 +68,7 @@ FRPPMReceiverTest.ino
 The Timer creates a timer object that uses the millis() command to ensure timing accurate timing of a loop
 Usage and Methods:
 	
-	#include  
+	#include <FRTimer.h> 
 	Timer();
 	Timer(uint32_t loopTimeMS);
 	void SetLoopTime(uint32_t loopTimeMS);
@@ -80,7 +80,23 @@ Usage and Methods:
 Examples:
 FRTimerDemo.ino
 FRTimerAndOverSamplingDemo.ino
-  
 
+## FRLogger
+The FRLogger creates a handler for logging data to an SD cards. The FRLogger uses a generic sensor class, FRSensorManager. For the usage of FRSensorManager, see next section.
+Usage and Methods:
 
+	#include <FRLogger.h>
+	Logger();
+	bool CheckSD();
+	void AddSensor(SensorManager* Sensor);
+	String GetLoggerFileName();
+	bool IsLogging();
+	bool StartLogger();
+	bool StopLogger();
+	String UpdateSensors();
+	void WriteLogger();	
 
+Examples:
+FRLoggerDemo.ino
+
+## FRSensorManager
