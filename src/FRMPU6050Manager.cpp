@@ -22,8 +22,8 @@ bool MPU6050Manager::Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu
   }
   else {
     //Serial.println("MPU6050 found!");
-	_myMPU.setAccelerometerRange(accelRange);
-	_myMPU.setGyroRange(gyroRange);
+	_myMPU->setAccelerometerRange(accelRange);
+	_myMPU->setGyroRange(gyroRange);
 	return true;
   }
 }
