@@ -8,14 +8,19 @@ const int I2C_SCL = 32; // The clock pin for I2C communcation
 Logger::Logger() {
   _isLogging = false;
   _fileName = "";
+  _loggerString.reserve(256);
 }
 
 bool Logger::CheckSD() {
-  if (!SD.begin()) {
-    return false;
-  } else {
-    return true;
-  }
+  return (SD.begin());
+}
+
+void Logger::AddSensor(SensorManager *Sensor){
+  sensors.push_back(Sensor);
+}
+
+String Logger::GetLoggerFileName() {
+  return _fileName;
 }
 
 bool Logger::IsLogging() {
@@ -36,11 +41,18 @@ bool Logger::StartLogger() {
   if (!_file) {  //Failed to open the file
     return false;
   }
+  
+  // Successfully opened a logfile. Write the header line
+  _loggerString.clear();
+  _loggerString.concat("Time[ms]; ");
+  for (int i = 0; i < sensors.size(); i++) {
+    _loggerString.concat(sensors[i]->HeaderString());
+  }
+  _file.println(_loggerString);
 
   _isLogging = true;
   return true;
 }
-
 
 bool Logger::StopLogger() {
   if (!_isLogging) { // Logger not running
@@ -57,22 +69,21 @@ bool Logger::StopLogger() {
 }
 
 
-
-
-String Logger::GetLoggerFileName() {
-  return _fileName;
-}
-
-void Logger::Update(){
-  for (int i = 0; i < sensors.size(); i++) {
-    Serial.print(sensors[i]->SensorString());
+String Logger::UpdateSensors(){
+  _loggerString = "";
+  _loggerString.concat(String(millis())); // Add the time
+  _loggerString.concat("; ");
+  for (int i = 0; i < sensors.size(); i++) { // Loop through the sensors
+	_loggerString.concat(sensors[i]->SensorString());
   }
-  Serial.println();
+  _loggerString.concat("\n"); // close with a new line
+  return _loggerString;
 }
 
-void Logger::AddSensor(SensorManager *Sensor){
-  sensors.push_back(Sensor);
-  Serial.println("Added a sensor");
+void Logger::WriteLogger(){
+  if (_isLogging){
+    _file.print(_loggerString);
+  }
 }
 
 String Logger::FindNewFileName() {
@@ -89,7 +100,6 @@ String Logger::FindNewFileName() {
     if (!SD.exists(_fileName)) {
       return _fileName;
     }
-
     fileNumber++;
   }
   return "";

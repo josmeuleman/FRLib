@@ -17,14 +17,15 @@ class Logger{
   public:
   Logger();
   bool CheckSD();
+  void AddSensor(SensorManager* Sensor);
+  String GetLoggerFileName();
 
   bool IsLogging();
   bool StartLogger();
   bool StopLogger();
-  String GetLoggerFileName();
-  void Update();
-  void AddSensor(SensorManager* Sensor);
-  void AddFloatMonitorToLog(float* value);
+  String UpdateSensors();
+  void WriteLogger();
+  
   // void AddFloatToLogLine(float value, String format);
   // void AddStringToLogLine(float value, String format);
 
@@ -35,6 +36,7 @@ class Logger{
   bool _isLogging;
   String _fileName;
   File _file;
+  String _loggerString;
   
 };
 
