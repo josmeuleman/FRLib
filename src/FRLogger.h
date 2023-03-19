@@ -1,4 +1,4 @@
-// Generic functions for FRLib
+// Class for logging data to an SD card 
 // 
 // 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
