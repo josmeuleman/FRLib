@@ -51,7 +51,7 @@ Examples:
 FRButtonLEDTest.ino
 
 ## FRPPMReceiver
-The PPMReceiver creates a listener to a PPM signal.
+The PPMReceiver class creates a listener to a PPM signal.
 Usage and Methods:
 
     #include <FRPPMReceiver.h>
@@ -65,7 +65,7 @@ Examples:
 FRPPMReceiverTest.ino
 
 ## FRTimer
-The Timer creates a timer object that uses the millis() command to ensure timing accurate timing of a loop
+The Timer class reates a timer object that uses the millis() command to ensure timing accurate timing of a loop
 Usage and Methods:
 	
 	#include <FRTimer.h> 
@@ -82,7 +82,7 @@ FRTimerDemo.ino
 FRTimerAndOverSamplingDemo.ino
 
 ## FRLogger
-The FRLogger creates a handler for logging data to an SD cards. The FRLogger uses a generic sensor class, FRSensorManager. For the usage of FRSensorManager, see next section.
+The Logger class creates a handler for logging data to an SD cards. The FRLogger uses a generic sensor class, FRSensorManager. For the usage of FRSensorManager, see next section.
 Usage and Methods:
 
 	#include <FRLogger.h>
@@ -100,3 +100,22 @@ Examples:
 FRLoggerDemo.ino
 
 ## FRSensorManager
+The SensorManager class is a parent class for specific sensor manager. The Logger monitors objects of the class SensorManager. In specific classes of SensorManagers, the methods are implemented
+Usage and Methods:
+	
+	#include <FRSensorManager.h>
+	String HeaderString();
+	String SensorString();
+
+
+## FRMPU6050Manager
+The MPU6050Manager class is a class for specifically logging an MPU6050 sensor. It is derived from the SensorManager class. 
+
+	MPU6050Manager();
+	~MPU6050Manager();
+	bool InitI2C(TwoWire &myWire);
+	String HeaderString() override;
+	String SensorString() override;
+
+Examples:
+FRLoggerDemo.ino
