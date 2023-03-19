@@ -120,5 +120,6 @@ The MPU6050Manager class is a class for specifically logging an MPU6050 sensor. 
 Note that:
 - The method init expects the I2C communication to be running
 - The method init requires a range for the accelerometer and the gyro. The values are defined in the library Adafruit_MPU6050
+
 Examples:
 FRLoggerDemo.ino
