@@ -1,9 +1,9 @@
+// Library for logging data to an SD card 
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #include "Arduino.h"
 #include "FRLogger.h"
-
-const int I2C_SDA = 33; // The data pin for I2C communication
-const int I2C_SCL = 32; // The clock pin for I2C communcation
-
 
 Logger::Logger() {
   _isLogging = false;
