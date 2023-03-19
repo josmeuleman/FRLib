@@ -48,7 +48,7 @@ void setup() {
   Serial.begin(9600);     // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
-  myMPU.InitI2C(Wire);    // The Wire connection must be made before initializing the MPU
+  myMPU.Init(Wire, MPU6050_RANGE_4_G, MPU6050_RANGE_500_DEG);    // The Wire connection must be made before initializing the MPU
   pinMode(PINAD, INPUT);  // Assign the pin for input
   if (myLogger.CheckSD()) {
     Serial.println("SD card found.");
