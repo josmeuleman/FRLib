@@ -24,6 +24,11 @@ String createFloatString(float value, unsigned int accuracy){
   return myString;
 }
 
+String createIntString(int value) {
+  String myString = String(value);
+  myString.concat("; ");
+  return myStrin  
+}
 
 float mapf(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
