@@ -127,9 +127,7 @@ Examples:
 - FRLoggerDemo.ino
 
 ## Other examples
-- FRGPSTest.ino
-
+**FRGPSTest.ino**
 Read the Serial2 port and prints the data to the Serial monitor. Useful for checking connection with GPS Sensor. This example does not decode the signal, it merely prints the raw data
-- FRMPU6050Test.ino
-
+**FRMPU6050Test.ino**
 Sets up communication to the MPU6050 over I2C
