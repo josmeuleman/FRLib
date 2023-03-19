@@ -48,7 +48,7 @@ void setup() {
   Serial.begin(9600);     // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
-  myMPU.InitI2C(Wire);
+  myMPU.InitI2C(Wire);    // The Wire connection must be made before initializing the MPU
   pinMode(PINAD, INPUT);  // Assign the pin for input
   if (myLogger.CheckSD()) {
     Serial.println("SD card found.");
@@ -78,17 +78,19 @@ void loop() {
       if (!myLogger.StartLogger()) {
         Serial.println("Something went wrong with the start of the log");
       }
+      Serial.print("File opened with the name: ");
+      Serial.println(myLogger.GetLoggerFileName());
     } else {// Stop logging
       Serial.println("Stop logging");
       if (!myLogger.StopLogger()) {
-        Serial.println("Something went wrong with the end of the log");
+        Serial.println("Something went wrong with the stopping of the log");
       }
     }
   }
 
-  // All sensors that are connected to the logger in the setup, will be read and written to the logfile
-  myLogger.Update();
-
+  String myString = myLogger.UpdateSensors(); // Updates all connected sensors and generates a string of all sensor values;
+  Serial.print(myString);
+  myLogger.WriteLogger(); // Only writes to logger if myLogger. IsLogging is true;
 
 
   if (myTimer.WaitUntilEnd()) {
