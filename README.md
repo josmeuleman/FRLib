@@ -31,8 +31,8 @@ Usage and Methods:
     bool HasChanged();
     bool HasChangedUp();
     bool HasChangedDown();
-  Examples:
-  FRButtonLEDTest.ino
+Examples:
+- FRButtonLEDTest.ino
 
 ## FRLED
 The class LED is allows for controlling binary outputs such as LEDs. 
@@ -48,7 +48,7 @@ Usage and Methods:
 	void Toggle();
 	
 Examples:
-FRButtonLEDTest.ino
+- FRButtonLEDTest.ino
 
 ## FRPPMReceiver
 The PPMReceiver class creates a listener to a PPM signal.
@@ -62,7 +62,7 @@ Usage and Methods:
     float ReadChannel(int ChannelNumber);
 
 Examples:
-FRPPMReceiverTest.ino
+- FRPPMReceiverTest.ino
 
 ## FRTimer
 The Timer class reates a timer object that uses the millis() command to ensure timing accurate timing of a loop
@@ -78,8 +78,8 @@ Usage and Methods:
 	bool LoopTimePassed();
   
 Examples:
-FRTimerDemo.ino
-FRTimerAndOverSamplingDemo.ino
+- FRTimerDemo.ino
+- FRTimerAndOverSamplingDemo.ino
 
 ## FRLogger
 The Logger class creates a handler for logging data to an SD cards. The FRLogger uses a generic sensor class, FRSensorManager. For the usage of FRSensorManager, see next section.
@@ -97,7 +97,7 @@ Usage and Methods:
 	void WriteLogger();	
 
 Examples:
-FRLoggerDemo.ino
+- FRLoggerDemo.ino
 
 ## FRSensorManager
 The SensorManager class is a parent class for specific sensor manager. The Logger monitors objects of the class SensorManager. In specific classes of SensorManagers, the methods are implemented
@@ -122,4 +122,4 @@ Note that:
 - The method init requires a range for the accelerometer and the gyro. The values are defined in the library Adafruit_MPU6050
 
 Examples:
-FRLoggerDemo.ino
+- FRLoggerDemo.ino
