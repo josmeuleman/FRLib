@@ -49,14 +49,22 @@ void setup() {
   Serial.begin(9600);     // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
-  myMPU.Init(Wire, MPU6050_RANGE_4_G, MPU6050_RANGE_500_DEG);    // The Wire connection must be made before initializing the MPU
-  pinMode(PINAD, INPUT);  // Assign the pin for input
-  if (myLogger.CheckSD()) {
-    Serial.println("SD card found.");
-  } else {
-    Serial.println("No SD card found.");
+  
+  // The Wire connection must be made before initializing the MPU
+  if (!myMPU.Init(Wire, MPU6050_RANGE_4_G, MPU6050_RANGE_500_DEG)) {
+    Serial.println("MPU not found!");
+    ErrorBlink();
   }
+
+  pinMode(PINAD, INPUT);  // Assign the pin for input
+
+  if (!myLogger.CheckSD()) {
+    Serial.println("No SD card found!");
+    ErrorBlink();
+  }
+  
   myAnalog1.SetOutputRange(-135.0, 135.0);
+  
   myLogger.AddSensor(&myAnalog1); // Add the analog sensor to the logger. the "&" means that the logger watches the address of the analog sensor 
   myLogger.AddSensor(&myMPU);
 
@@ -72,28 +80,39 @@ void loop() {
   myButton.Update();              // Read the state of the button
 
   if (myButton.HasChangedUp()) {  //Check if the state has changed from low to high
-    myLed.Toggle();  // Change the state of the led
     if (!myLogger.IsLogging()) { // Start logging
       Serial.println("Start logging");
       if (!myLogger.StartLogger()) {
         Serial.println("Something went wrong with the start of the log");
+        ErrorBlink();
       }
-      Serial.print("File opened with the name: ");
-      Serial.println(myLogger.GetLoggerFileName());
+      else {
+        myLed.SetOn();
+        Serial.print("File opened with the name: ");
+        Serial.println(myLogger.GetLoggerFileName());
+      }
     } else {// Stop logging
       Serial.println("Stop logging");
       if (!myLogger.StopLogger()) {
         Serial.println("Something went wrong with the stopping of the log");
+        ErrorBlink();
+      }
+      else {
+        myLed.SetOff();
       }
     }
   }
 
   String myString = myLogger.UpdateSensors(); // Updates all connected sensors and generates a string of all sensor values;
-  Serial.print(myString);
+  //Serial.print(myString);
   myLogger.WriteLogger(); // Only writes to logger if myLogger. IsLogging is true;
 
-
+  myLed.Update();
   if (myTimer.WaitUntilEnd()) {
     Serial.println("Overrun!");
   }
+}
+
+void ErrorBlink(){
+  myLed.SetBlink(100, 100);
 }
