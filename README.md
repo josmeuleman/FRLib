@@ -109,13 +109,16 @@ Usage and Methods:
 
 
 ## FRMPU6050Manager
-The MPU6050Manager class is a class for specifically logging an MPU6050 sensor. It is derived from the SensorManager class. 
+The MPU6050Manager class is a class for specifically logging an MPU6050 sensor. It is derived from the SensorManager class. Internally it uses the library Adafruit_MPU6050
 
 	MPU6050Manager();
 	~MPU6050Manager();
-	bool InitI2C(TwoWire &myWire);
+	bool Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu6050_gyro_range_t gyroRange)
 	String HeaderString() override;
 	String SensorString() override;
 
+Note that:
+- The method init expects the I2C communication to be running
+- The method init requires a range for the accelerometer and the gyro. The values are defined in the library Adafruit_MPU6050
 Examples:
 FRLoggerDemo.ino
