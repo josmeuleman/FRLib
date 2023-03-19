@@ -1,3 +1,7 @@
+// Class for binary sensors such as buttons
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #include "Arduino.h"
 #include "FRButton.h"
 
