@@ -10,9 +10,11 @@
 // - Potmeter2, Wiper - Analog Input J7, D34
 // - Potmeter2, VCC - Analog Input J7, 3.3V
 // Required libraries:
-// - none
+// - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
 //
 // 2023-03-04, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
+#include <FRGeneric.h>
 
 const int PINAD[2] = {34, 35}; // Analog input pin numbers
 
@@ -34,9 +36,8 @@ void loop() {
     Serial.print("A"); 
     Serial.print(i+1);
     Serial.print(":");
-
-    Serial.print(val);  // Print the value
-    Serial.print("; "); // Next variable
+    Serial.print(createIntString(val));  // Print the value
+    
   }
   Serial.println(); // New line
   delay(10);
