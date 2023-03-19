@@ -67,7 +67,8 @@ void LED::Update(){
 	return;
   }
   else {
-    _lastTimeMS = millis();
+	SetState(true);
+	_lastTimeMS = millis();
   }
 }
 
