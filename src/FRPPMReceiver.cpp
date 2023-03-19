@@ -1,3 +1,7 @@
+// Class for receiving PPM signals
+// 
+// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 #include "Arduino.h"
 #include "FRPPMReceiver.h"
 
