@@ -14,6 +14,8 @@ Usage and methods:
 	float mapf(float x, float in_min, float in_max, float out_min, float out_max) 
 
 All generated strings are ended with a "; ". This is conventient for plotting signals in the Serial monitor, and for writing to a csv file.
+Exampes:
+- FRAnalogReadTest.ino
 
 
 ## FRButton
@@ -123,3 +125,9 @@ Note that:
 
 Examples:
 - FRLoggerDemo.ino
+
+## Other examples
+- FRGPSTest.ino
+Read the Serial2 port and prints the data to the Serial monitor. Useful for checking connection with GPS Sensor. This example does not decode the signal, it merely prints the raw data
+- FRMPU6050Test.ino
+Sets up communication to the MPU6050 over I2C
