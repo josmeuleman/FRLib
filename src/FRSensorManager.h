@@ -15,5 +15,4 @@ public:
   virtual ~SensorManager() = default;
 };
 
-
 #endif
