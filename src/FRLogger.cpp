@@ -8,7 +8,7 @@
 Logger::Logger() {
   _isLogging = false;
   _fileName = "";
-  _loggerString.reserve(256);
+  _loggerString.reserve(512);
 }
 
 bool Logger::CheckSD() {
