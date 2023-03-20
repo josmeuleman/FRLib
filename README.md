@@ -4,7 +4,7 @@ The library is written for the Project2.2 for Aeronautical & Precision Engineerr
 
 ## FRGeneric
 Generic functions for several sub libraries
-Usage and methods:
+Methods:
 
 	#include <FRGeneric.h>
 	String createTimeString(int hour, int minute, int second)
@@ -14,14 +14,14 @@ Usage and methods:
 	float mapf(float x, float in_min, float in_max, float out_min, float out_max) 
 
 All generated strings are ended with a "; ". This is conventient for plotting signals in the Serial monitor, and for writing to a csv file.
-Exampes:
+Examples:
 - FRAnalogReadTest.ino
 
 
 ## FRButton
 
 The class button is allows for monitoring binary sensors such as buttons. 
-Usage and Methods:
+Methods:
 
     #include <FRButton.h>
     Button();
@@ -38,7 +38,7 @@ Examples:
 
 ## FRLED
 The class LED is allows for controlling binary outputs such as LEDs. 
-Usage and Methods:
+Methods:
 
 	#include <FRLED.h>
 	LED();
@@ -57,7 +57,7 @@ Examples:
 
 ## FRPPMReceiver
 The PPMReceiver class creates a listener to a PPM signal.
-Usage and Methods:
+Methods:
 
     #include <FRPPMReceiver.h>
 	PPMReceiver(int pinNumber, int numberOfChannels);
@@ -71,7 +71,7 @@ Examples:
 
 ## FRTimer
 The Timer class reates a timer object that uses the millis() command to ensure timing accurate timing of a loop
-Usage and Methods:
+Methods:
 	
 	#include <FRTimer.h> 
 	Timer();
@@ -88,7 +88,7 @@ Examples:
 
 ## FRLogger
 The Logger class creates a handler for logging data to an SD cards. The FRLogger uses a generic sensor class, FRSensorManager. For the usage of FRSensorManager, see next section.
-Usage and Methods:
+Methods:
 
 	#include <FRLogger.h>
 	Logger();
@@ -106,21 +106,42 @@ Examples:
 
 ## FRSensorManager
 The SensorManager class is a parent class for specific sensor manager. The Logger monitors objects of the class SensorManager. In specific classes of SensorManagers, the methods are implemented
-Usage and Methods:
-	
-	#include <FRSensorManager.h>
-	String HeaderString();
-	String SensorString();
 
+## FRAnalogInputManager
+The AnalogInputManager class is a class for specifically logging analog inputs such as potmeter sensor. It is derived from the SensorManager class.
+Methods:
+
+	#include<FRAnalogInputManager>
+	AnalogInputManager();
+	AnalogInputManager(int pinNumber);
+	AnalogInputManager(int pinNumber, String headerString);
+	void SetPinNumber(int pinNumber);
+	void SetHeaderString(String headerString);
+	void SetOutputRange(float minValue, float maxValue);
+
+Usage:
+	...
+	AnalogInputManager myAnalog1(PINAD, "AlphaVane[deg]");
+	...
+	myLogger.AddSensor(&myAnalog1);
+
+Examples:
+- FRLoggerDemo.ino
 
 ## FRMPU6050Manager
 The MPU6050Manager class is a class for specifically logging an MPU6050 sensor. It is derived from the SensorManager class. Internally it uses the library Adafruit_MPU6050
+Methods:
 
+	#include <FRMPU6050Manager.h> 
 	MPU6050Manager();
-	~MPU6050Manager();
 	bool Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu6050_gyro_range_t gyroRange)
-	String HeaderString() override;
-	String SensorString() override;
+
+Usage:
+	...
+	MPU6050Manager myMPU;
+	...
+	myMPU.Init(Wire, MPU6050_RANGE_4_G, MPU6050_RANGE_500_DEG);
+	myLogger.AddSensor(&myMPU);
 
 Note that:
 - The method init expects the I2C communication to be running
@@ -128,6 +149,21 @@ Note that:
 
 Examples:
 - FRLoggerDemo.ino
+
+## FRTinyGPSManager
+The TinyGPSManager class is a class for specifically logging an TinyGPSPlus sensor. It is derived from the SensorManager class. Internally it uses the library TinyGPSPlus
+Methods:
+
+	#include <FRTinyGPSManager.h>
+	TinyGPSManager();
+	bool Init();
+	
+Usage:
+	...
+	TinyGPSManager myGPS; 
+	...
+	myGPS.Init();
+	
 
 ## Other examples
 **FRGPSTest.ino**
