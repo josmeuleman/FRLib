@@ -1,6 +1,6 @@
 // Manager for a MPU6050 sensor. It uses the SensorManager class, such that the Logger class can log the sensor.
 // 
-// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-20, Jos Meuleman & Tim van Cuylenborg, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 #ifndef FRMPU6050Manager_h
 #define FRMPU6050Manager_h

@@ -1,6 +1,6 @@
 // Class for logging data to an SD card 
 // 
-// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-20, Jos Meuleman & Tim van Cuylenborg, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 #ifndef FRLogger_h
 #define FRLogger_h

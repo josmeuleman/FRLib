@@ -1,6 +1,7 @@
 // Generic SensorManager for the Logger in FRLib
 // 
-// 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-03-20, Jos Meuleman & Tim van Cuylenborg, Inholland Aeronautical & Precision Engineering, The Netherlands
+
 
 #ifndef FRSensorManager_h
 #define FRSensorManager_h
