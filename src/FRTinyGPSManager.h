@@ -19,6 +19,7 @@ class TinyGPSManager : public SensorManager {
 
   private :
   const int _BAUDGPS = 9600;
+  const int _TIMEOUTMS = 20;
   TinyGPSPlus* _myGPS;
 
 };

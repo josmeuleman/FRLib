@@ -30,7 +30,8 @@ String TinyGPSManager::HeaderString(){
 }
 
 String TinyGPSManager::SensorString(){
-  while (Serial2.available() > 0){
+  long tStart = millis();
+  while ((Serial2.available() > 0) & (millis()-tStart < _TIMEOUTMS)){
     _myGPS->encode(Serial2.read());
   }	
 
