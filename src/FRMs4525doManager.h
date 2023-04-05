@@ -19,7 +19,7 @@ class Ms4525doManager : public SensorManager {
   String SensorString() override;
 
   private :
-  bfs::Ms4525do _myPitot  
+  bfs::Ms4525do _myPitot; 
   const int PITOT_I2C_ADDRESS = 0x28;     // I2C address of the Pitot sensor
 };
 
