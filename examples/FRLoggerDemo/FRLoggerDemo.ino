@@ -14,7 +14,7 @@
 // - FRLib (download from https://github.com/josmeuleman/FRLib, unzipped in ../Documents/Arduino/libraries/ )
 // - Adafruit_MPU6050.h
 //
-// 2023-03-17, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
+// 2023-04-05, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
 
 #include <FRTimer.h>
