@@ -55,8 +55,6 @@ void setup() {
     Error("MPU not found!");
   }
 
-  pinMode(PINAD, INPUT);  // Assign the pin for input
-
   if (!myLogger.CheckSD()) {
     Error("No SD card found!");
   }
