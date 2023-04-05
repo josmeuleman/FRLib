@@ -5,9 +5,6 @@
 #include "FRMs4525doManager.h"
 #include "FRGeneric.h"
 
-//Ms4525doManager::Ms4525doManager() : _myPitot(){
-//}
-
 Ms4525doManager::Ms4525doManager() {
   _myPitot = new bfs::Ms4525do(); // Allocate memory for the object
 }
