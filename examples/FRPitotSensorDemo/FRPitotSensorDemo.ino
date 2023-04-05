@@ -52,8 +52,8 @@ void setup() {
 void loop() {
   // read the pitot sensor. It will return true, if successfully read.
   if (MyPitot.Read()) {
-    PitotString = makePitotLongString(MyPitot); // Make a long string, with extra text, convenient for in the serial monitor
-    //PitotString = makePitotShortString(MyPitot); // Make a short string with just the data, convenient for plotting and logging
+    //PitotString = makePitotLongString(MyPitot); // Make a long string, with extra text, convenient for in the serial monitor
+    PitotString = makePitotShortString(MyPitot); // Make a short string with just the data, convenient for plotting and logging
     Serial.println(PitotString);
   }
   delay(100);  // wait 100 milliseconds before going back to the beginning
