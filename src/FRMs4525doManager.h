@@ -13,13 +13,13 @@
 class Ms4525doManager : public SensorManager {
   public :
   Ms4525doManager();
-  ~Ms4525doManager(); // Add a destructor
+  virtual ~Ms4525doManager(); // Add a destructor
   bool Init(TwoWire &myWire);
   String HeaderString() override;
   String SensorString() override;
 
   private :
-  bfs::Ms4525do _myPitot; 
+  bfs::Ms4525do* _myPitot; 
   const int PITOT_I2C_ADDRESS = 0x28;     // I2C address of the Pitot sensor
 };
 
