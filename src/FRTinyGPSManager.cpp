@@ -30,13 +30,39 @@ String TinyGPSManager::HeaderString(){
 }
 
 String TinyGPSManager::SensorString(){
-  _myGPS->encode(Serial2.read());
+  while (Serial2.available() > 0){
+    _myGPS->encode(Serial2.read());
+  }	
+
   String tempString;
   tempString.concat(createIntString(_myGPS->satellites.value()));
-  tempString.concat(createDateString(_myGPS->date.year(), _myGPS->date.month(), _myGPS->date.day()));
-  tempString.concat(createTimeString(_myGPS->time.hour(), _myGPS->time.minute(), _myGPS->time.second()));
-  tempString.concat(createFloatString(_myGPS->location.lat(), 6));
-  tempString.concat(createFloatString(_myGPS->location.lng(), 6));
-  tempString.concat(createFloatString(_myGPS->altitude.meters(), 1));
+  if (_myGPS->date.isValid()) {
+	tempString.concat(createDateString(_myGPS->date.year(), _myGPS->date.month(), _myGPS->date.day()));
+  }
+  else {
+    tempString.concat(createDateString(9999, 99, 99));
+  }
+  
+  if (_myGPS->time.isValid()) {
+	tempString.concat(createTimeString(_myGPS->time.hour(), _myGPS->time.minute(), _myGPS->time.second()));
+  }
+  else {
+    tempString.concat(createTimeString(99, 99, 99));
+  }
+  
+  if (_myGPS->location.isValid()) {
+	tempString.concat(createFloatString(_myGPS->location.lat(), 6));
+	tempString.concat(createFloatString(_myGPS->location.lng(), 6));
+  }
+  else {
+    tempString.concat(createFloatString(0, 6));
+	tempString.concat(createFloatString(0, 6));  
+  }	  
+  if (_myGPS->altitude.isValid()) {
+	tempString.concat(createFloatString(_myGPS->altitude.meters(), 1));
+  }
+  else {
+ 	tempString.concat(createFloatString(0, 1));
+  }
   return tempString;
 }
