@@ -29,28 +29,16 @@ bool Ms4525doManager::Init(TwoWire &myWire){
 
 String Ms4525doManager::HeaderString(){
   String tempString;
-  tempString.concat("accX [m/s2]; ");
-  tempString.concat("accY [m/s2]; ");
-  tempString.concat("accZ [m/s2]; ");
-  tempString.concat("rotX [deg/s]; ");
-  tempString.concat("rotY [deg/s]; ");
-  tempString.concat("rotZ [deg/s]; ");
-  tempString.concat("tempMPU [degC]; ");
+  tempString.concat("pressure [Pa]; ");
+  tempString.concat("tempPitot [degC]; ");
   return tempString;
 }
 
 String Ms4525doManager::SensorString(){
-  sensors_event_t a, g, temp;
-  _myPitot->getEvent(&a, &g, &temp);
   String tempString;
   
-  tempString.concat(createFloatString(a.acceleration.x, 3));
-  tempString.concat(createFloatString(a.acceleration.y, 3));
-  tempString.concat(createFloatString(a.acceleration.z, 3));
-  tempString.concat(createFloatString(g.gyro.x, 3));
-  tempString.concat(createFloatString(g.gyro.y, 3));
-  tempString.concat(createFloatString(g.gyro.z, 3));
-  tempString.concat(createFloatString(temp.temperature,1));
- 
+  tempString.concat(createFloatString(_myPitot->pres_pa();, 3));
+  tempString.concat(createFloatString(_myPitot->temp(), 1));
+  
   return tempString;
 }
