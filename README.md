@@ -163,6 +163,20 @@ Usage:
 	TinyGPSManager myGPS; 
 	...
 	myGPS.Init();
+
+## FRMs4525doManager
+The Ms4525doManager class is a class for specifically logging a Ms4525do sensor (differential pressure). This is used in the pitot sensor. It is derived from the SensorManager class. Internally it uses the library ms4525do
+Methods:
+
+	#include <FRTinyGPSManager.h>
+	Ms4525doManager();
+	bool Init();
+	
+Usage:
+	...
+	Ms4525doManager myPitot; 
+	...
+	myPitot.Init();
 	
 
 ## Other examples
