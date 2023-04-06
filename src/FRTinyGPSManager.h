@@ -14,6 +14,7 @@ class TinyGPSManager : public SensorManager {
   TinyGPSManager();
   ~TinyGPSManager(); // Add a destructor
   bool Init();
+  bool HasValidData();
   String HeaderString() override;
   String SensorString() override;
 

@@ -18,6 +18,10 @@ bool TinyGPSManager::Init(){
   return true;
 }
 
+bool TinyGPSManager::HasValidData() {
+  return(_myGPS->location.isValid());
+}
+
 String TinyGPSManager::HeaderString(){
   String tempString;
   tempString.concat("Satellites []; ");
