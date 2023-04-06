@@ -98,7 +98,7 @@ void loop() {
   }
 
   String myString = myLogger.UpdateSensors(); // Updates all connected sensors and generates a string of all sensor values;
-  //Serial.print(myString);
+  //Serial.print(myString); // Writing to the Serial Monitor will sometimes take more than 100 ms. So print to screen only when you have a slow update rate. 
   myLogger.WriteLogger(); // Only writes to logger if myLogger. IsLogging is true;
 
   if (myTimer.WaitUntilEnd()) {
