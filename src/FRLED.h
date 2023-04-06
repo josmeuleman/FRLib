@@ -12,15 +12,13 @@ class LED {
   ~LED();
 
   void SetPinNumber(int pinNumber);
-  void Init();
 
-  //void Update();
   void SetState(bool state);
   void SetOn();
   void SetOff();
   void Toggle();
   void SetBlink(int interval);
-  void Update();
+
   
 private:
   int _pinNumber;

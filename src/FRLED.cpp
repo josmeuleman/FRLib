@@ -12,7 +12,8 @@ LED::LED() {
   _pinNumber = -1;
   _isOn = false;
   _blinkMode = false;
-
+  _timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(_timer, &LED::onTimer, true);
 }
 
 LED::LED(int pinNumber) {
@@ -21,7 +22,10 @@ LED::LED(int pinNumber) {
   _isOn = false;
   _blinkMode = false;   
   pinMode(_pinNumber, OUTPUT);
+  _timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(_timer, &LED::onTimer, true);  
 }
+
 LED::~LED() {
   delete _timer;
 }
@@ -29,11 +33,6 @@ LED::~LED() {
 void LED::SetPinNumber(int pinNumber) {
   _pinNumber = pinNumber;
   pinMode(_pinNumber, OUTPUT);
-}
-
-void LED::Init() {
-  _timer = timerBegin(0, 80, true);
-  timerAttachInterrupt(_timer, &LED::onTimer, true);
 }
 
 void LED::SetState(bool state) {
