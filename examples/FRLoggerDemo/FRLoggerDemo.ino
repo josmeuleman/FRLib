@@ -101,7 +101,6 @@ void loop() {
   //Serial.print(myString);
   myLogger.WriteLogger(); // Only writes to logger if myLogger. IsLogging is true;
 
-  myLed.Update();
   if (myTimer.WaitUntilEnd()) {
     Serial.println("Overrun!");
   }
@@ -113,5 +112,5 @@ void loop() {
 //---------------------------------------------------------------------------------------------------------
 void Error(String errorMessage){
   Serial.println(errorMessage);
-  myLed.SetBlink(100, 100);
+  myLed.SetBlink(100);
 }
