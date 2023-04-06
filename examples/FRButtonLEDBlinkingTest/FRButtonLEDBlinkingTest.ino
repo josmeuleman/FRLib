@@ -44,13 +44,13 @@ void loop() {
       myLed.SetOff();
     }
     if (ledMode == 1) {
-      myLed.SetOn();
+      myLed.SetBlink(100);
     }
     if (ledMode == 2) {
       myLed.SetBlink(500);
     }
     if (ledMode == 3) {
-      myLed.SetBlink(100);
+      myLed.SetBlink(2000);
     }
   }
 
