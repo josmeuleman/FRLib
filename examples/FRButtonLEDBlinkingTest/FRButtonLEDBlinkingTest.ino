@@ -24,6 +24,7 @@ LED myLed(PINLED);                 // Create a led object with the given pin.
 //---------------------------------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
+  myLed.Init();
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -47,13 +48,12 @@ void loop() {
       myLed.SetOn();
     }
     if (ledMode == 2) {
-      myLed.SetBlink(900, 100);
+      myLed.SetBlink(500);
     }
     if (ledMode == 3) {
-      myLed.SetBlink(100, 100);
+      myLed.SetBlink(100);
     }
   }
 
-  myLed.Update();
   delay(10);
 }
