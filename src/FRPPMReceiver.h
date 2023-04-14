@@ -1,3 +1,4 @@
+
 // Class for receiving PPM signals
 // 
 // 2023-03-19, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
@@ -5,8 +6,9 @@
 #ifndef FRPPMReceiver_h
 #define FRPPMReceiver_h
 
+#include <FRSensorManager.h>
 
-class PPMReceiver {
+class PPMReceiver : public SensorManager{
   public:
   PPMReceiver(int pinNumber, int numberOfChannels);
   void SetLowPassFilter(float* alphaValues);
@@ -15,6 +17,9 @@ class PPMReceiver {
   void Update();
   float ReadChannel(int ChannelNumber);
 
+  String HeaderString() override;
+  String SensorString() override;
+  
   private:
   int _pinNumber;
   int _numberOfChannels;
