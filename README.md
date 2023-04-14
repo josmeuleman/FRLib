@@ -120,6 +120,7 @@ Methods:
 	void SetOutputRange(float minValue, float maxValue);
 
 Usage:
+
 	...
 	AnalogInputManager myAnalog1(PINAD, "AlphaVane[deg]");
 	...
@@ -137,6 +138,7 @@ Methods:
 	bool Init(TwoWire &myWire, mpu6050_accel_range_t accelRange, mpu6050_gyro_range_t gyroRange)
 
 Usage:
+
 	...
 	MPU6050Manager myMPU;
 	...
@@ -159,6 +161,7 @@ Methods:
 	bool Init();
 	
 Usage:
+	
 	...
 	TinyGPSManager myGPS; 
 	...
@@ -173,6 +176,7 @@ Methods:
 	bool Init();
 	
 Usage:
+	
 	...
 	Ms4525doManager myPitot; 
 	...
