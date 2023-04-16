@@ -16,7 +16,6 @@ class PPMReceiverManager : public SensorManager{
   void Init();
   void SetPrefix(String prefix);
   
-  void Update();
   int ReadChannel(int ChannelNumber);
   
   String HeaderString() override;
