@@ -16,7 +16,7 @@
 
 HardwareSerial SerialGPS(2);  // The serial connection to the GPS device
 TinyGPSPlus gps;
-Timer MyTimer(1000); // Create a timer with 1000 millisecond cycle
+Timer myTimer(1000); // Create a timer with 1000 millisecond cycle
 
 //---------------------------------------------------------------------------------------------------------
 // SETUP
@@ -25,7 +25,7 @@ Timer MyTimer(1000); // Create a timer with 1000 millisecond cycle
 void setup() {
   Serial.begin(9600);     // Start the serial communciation
   SerialGPS.begin(9600);
-  MyTimer.Start();
+  myTimer.Start();
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -42,5 +42,5 @@ void loop() {
   Serial.printf("The time of the GPS sensor: %s",createTimeString(gps.time.hour(), gps.time.minute(), gps.time.second()));
   
   Serial.println();
-  MyTimer.WaitUntilEnd();
+  myTimer.WaitUntilEnd();
 }
