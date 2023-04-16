@@ -55,6 +55,11 @@ SetPinNumber	KEYWORD2
 SetHeaderString	KEYWORD2
 SetOutputRange	KEYWORD2
 
+PPMReceiverManager	KEYWORD1
+Init	KEYWORD2
+SetPrefix	KEYWORD2
+ReadChannel	KEYWORD2
+
 createTimeString	KEYWORD2
 createDateString	KEYWORD2
 createFloatString	KEYWORD2
