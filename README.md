@@ -156,31 +156,54 @@ Examples:
 The TinyGPSManager class is a class for specifically logging an TinyGPSPlus sensor. It is derived from the SensorManager class. Internally it uses the library TinyGPSPlus
 Methods:
 
-	#include <FRTinyGPSManager.h>
 	TinyGPSManager();
 	bool Init();
 	
 Usage:
 	
-	...
+	#include <FRTinyGPSManager.h>
 	TinyGPSManager myGPS; 
 	...
 	myGPS.Init();
+	myLogger.AddSensor(&myGPS);
 
 ## FRMs4525doManager
 The Ms4525doManager class is a class for specifically logging a Ms4525do sensor (differential pressure). This is used in the pitot sensor. It is derived from the SensorManager class. Internally it uses the library ms4525do
 Methods:
 
-	#include <FRTinyGPSManager.h>
 	Ms4525doManager();
-	bool Init();
+	Init();
+	
 	
 Usage:
 	
-	...
+	#include <FRTinyGPSManager.h>
 	Ms4525doManager myPitot; 
 	...
 	myPitot.Init();
+	myLogger.AddSensor(&myPitot);
+	
+## PPMReceiverManager
+The PPMReceiverManager class is a class specifically for logging ppm signals. It is a variant on PPMReceiver, but based on the SensorManager class, using an interrupt routine.
+Methods:
+
+	PPMReceiverManager(int pinNumber, int numberOfChannels)
+	void Init();
+	void SetPrefix(String prefix);
+    int ReadChannel(int ChannelNumber);
+
+Usage:
+
+	#include <FRPPMReceiverManager.h>
+	PPMReceiverManager MyReceiverManager(PINPPM, NUMBEROFCHANNELS);
+	...
+	MyReceiverManager.Init();
+	myLogger.AddSensor(&MyReceiverManager);
+	...
+	MyReceiverManager.ReadChannel(i);
+
+Examples:
+- FRPPMReceiverManagerTest.ino	
 	
 
 ## Other examples
