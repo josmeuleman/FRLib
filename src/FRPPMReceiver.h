@@ -6,9 +6,7 @@
 #ifndef FRPPMReceiver_h
 #define FRPPMReceiver_h
 
-#include <FRSensorManager.h>
-
-class PPMReceiver : public SensorManager{
+class PPMReceiver{
   public:
   PPMReceiver(int pinNumber, int numberOfChannels);
   void SetLowPassFilter(float* alphaValues);
@@ -16,10 +14,7 @@ class PPMReceiver : public SensorManager{
   
   void Update();
   float ReadChannel(int ChannelNumber);
-
-  String HeaderString() override;
-  String SensorString() override;
-  
+ 
   private:
   int _pinNumber;
   int _numberOfChannels;

@@ -61,14 +61,3 @@ float PPMReceiver::ReadChannel(int ChannelNumber) {
     return (0);
   }
 }
-
-String PPMReceiver::HeaderString(){
-  String tempString;
-  return tempString;
-}
-
-String PPMReceiver::SensorString(){
-  String tempString;
-  return tempString;
-}
-	
