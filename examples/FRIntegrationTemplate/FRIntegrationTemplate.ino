@@ -33,14 +33,6 @@ typedef enum triStateSwitch {
   HISTATE
 };
 
-typedef enum triStateMotion {
-  MOVEDOWN = -1,
-  NOMOVE,
-  MOVEUP
-};
-
-
-
 const int I2C_SDA = 33;             // The data pin for I2C communication
 const int I2C_SCL = 32;             // The clock pin for I2C communcation
 const int PINSWITCH = 22;           // The pin number for he button to start and stop logging
@@ -88,16 +80,19 @@ bool stopLogger = false;
 // States for landing gear
 triStateSwitch landingGearSwitchState;
 triStateSwitch landingGearSwitchStatePrev;
-bool isHatchOpen = true;
-bool isLandingGearOut = true;
-triStateMotion landingGearAction = NOMOVE;
-triStateMotion landingGearHatchAction = NOMOVE;
 
 const byte NUMBEROFSERVOS = 4;
-const int MAXSERVOSPEEDDEGS[NUMBEROFSERVOS] = {2, 10, 100, 1}; // Maximum speed of the servos in degrees per sec
-const int MAXSERVOACCDEGSS[NUMBEROFSERVOS] = {10, 10, 10, 10}; // Maximum acceleration of the servos in degrees per sec2
+const byte SERVOLANDINGGEAR = 0;        // the servo number of the landing gear
+const byte SERVOLANDINGHATCH = 1;   // the servo number of the landing gear hatch
+const int MAXSERVOSPEEDDEGS[NUMBEROFSERVOS] = {30, 30, 100, 100}; // Maximum speed of the servos in degrees per sec
 int servoTargetPos[NUMBEROFSERVOS] = {0, 0, 0, 0}; //The initial state of the servos
 float servoActualPos[NUMBEROFSERVOS];
+const int SERVOLANDINGGEARPOSEXTENDED = 90;
+const int SERVOLANDINGGEARPOSRETRACTED = -90;
+const int SERVOLANDINGHATCHPOSOPEN = 90;
+const int SERVOLANDINGHATCHPOSCLOSED = -90;
+
+
 
 //---------------------------------------------------------------------------------------------------------
 // SETUP
@@ -123,9 +118,13 @@ void setup() {
   loggerTimer.Start();
   servoTimer.Start();
 
+  // Starting pos for servos
+  servoTargetPos[SERVOLANDINGGEAR] = SERVOLANDINGGEARPOSEXTENDED;
+  servoTargetPos[SERVOLANDINGHATCH] = SERVOLANDINGHATCHPOSOPEN;
   for (int i = 0; i < NUMBEROFSERVOS; i++) {
     servoActualPos[i] = servoTargetPos[i];
   }
+  
 
 }
 
@@ -139,15 +138,18 @@ void loop() {
   //-------------------------------------------------------------------------------------------------------
   for (int i = 0; i < NUMBEROFCHANNELS2; i++) {
     channelValues[i] = receiver2.ReadChannel(i);
-    Serial.print(channelValues[i]);
-    Serial.print("; ");
   }
-  Serial.println();
+  
+  // // for debugging, print some values. This debugging slows down your program
+  // for (int i = 0; i < NUMBEROFCHANNELS2; i++) {
+  //   Serial.print(channelValues[i]);
+  //   Serial.print("; ");
+  // }
+  // Serial.println();
 
   //-------------------------------------------------------------------------------------------------------
   // Process the controller channels
   //-------------------------------------------------------------------------------------------------------
-
   // Read switch SWA (high/low) for logging
   loggerSwitchState = IsPPMHigh(channelValues[LOGGERSWITCHCHANNEL]);
   // Compare the state with the previous state:
@@ -161,12 +163,13 @@ void loop() {
   //-------------------------------------------------------------------------------------------------------
   // Handle the motors
   //-------------------------------------------------------------------------------------------------------
-  servoTargetPos[0] = map(channelValues[0], 600, 2100, 0, 180);
-  // UpdateServos();
-  // Serial.print(servoTargetPos[0]);
-  // Serial.print("; ");
-  // Serial.print(servoActualPos[0]);
-  
+  UpdateServos();
+  // // for debugging, print some values. This debugging slows down your program
+  // for (int i = 0; i < NUMBEROFSERVOS; i++) {
+  //   Serial.print(servoActualPos[i]);
+  //   Serial.print("; ");
+  // }
+  // Serial.println();
 
   //-------------------------------------------------------------------------------------------------------
   // Start or stop logger
@@ -196,7 +199,6 @@ void loop() {
   //-------------------------------------------------------------------------------------------------------
   // Write to the log file if needed
   //-------------------------------------------------------------------------------------------------------
-  
   // Check if it is time to log the data
   if (loggerTimer.LoopTimePassed()) {
     String myString = myLogger.UpdateSensors();  // Updates all connected sensors and generates a string of all sensor values;
@@ -243,26 +245,24 @@ void HandleLandingGearSwitch(){
     // towards rectracted state
     if (landingGearSwitchState == MIDSTATE) {
       // So it was HISTATE, now pull in the gear
-      landingGearAction = MOVEUP;
-      landingGearHatchAction = NOMOVE;
-      Serial.println("Retract gear");
+      servoTargetPos[SERVOLANDINGGEAR] = SERVOLANDINGGEARPOSRETRACTED;
+      //Serial.println("Retract gear");
     } else {
-      landingGearAction = NOMOVE;
-      landingGearHatchAction = MOVEUP;
-      Serial.println("Close hatch");
+      // So it was in MIDSTATE, now close the hatch
+      servoTargetPos[SERVOLANDINGHATCH] = SERVOLANDINGHATCHPOSCLOSED;
+      //Serial.println("Close hatch");
     }
   }
   if (landingGearSwitchState > landingGearSwitchStatePrev) {
     // towards extended state
     if (landingGearSwitchState == MIDSTATE) {
-      // So it was LOSTATE, now extent in the gear
-      landingGearAction = NOMOVE;
-      landingGearHatchAction = MOVEDOWN;
-      Serial.println("Open hatch");
+      // So it was LOSTATE, now open the hatch
+      servoTargetPos[SERVOLANDINGHATCH] = SERVOLANDINGHATCHPOSOPEN;
+      //Serial.println("Open hatch");
     } else {
-      landingGearAction = MOVEDOWN;
-      landingGearHatchAction = NOMOVE;
-      Serial.println("Extend gear");
+      // So it was in MIDSTATE, now extend the gear
+      servoTargetPos[SERVOLANDINGGEAR] = SERVOLANDINGGEARPOSEXTENDED;
+      //Serial.println("Extend gear");
     }
   }
   landingGearSwitchStatePrev = landingGearSwitchState; //update the previous state for the next loop
@@ -271,16 +271,19 @@ void HandleLandingGearSwitch(){
 
 void UpdateServos(){
   for (int i = 0; i < NUMBEROFSERVOS; i++) {
+    // Calculate the differrence between target and current position
     float posError = servoTargetPos[i] - servoActualPos[i];
-    float maxStep = MAXSERVOSPEEDDEGS[i]*LOOPTIMESERVOMS/1000.0; //maximumStep a servo can make in a loopcycle
+    float maxStep = MAXSERVOSPEEDDEGS[i]*LOOPTIMESERVOMS/1000.0; //maximum step a servo can make in a loopcycle based on maximum speed
     if (posError > maxStep) {
+      // if the difference is larger than the maximum step size, limit the step size
       posError = maxStep;
     }
     if (posError < -maxStep) {
+      // same, but for negative values
       posError = -maxStep;
     }
     servoActualPos[i] = servoActualPos[i]+posError;
-
+    //To be done: Write the rounded off setpoint to the servo motor
   }
 
 }
