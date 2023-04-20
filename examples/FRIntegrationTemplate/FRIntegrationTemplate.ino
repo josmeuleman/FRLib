@@ -93,6 +93,12 @@ bool isLandingGearOut = true;
 triStateMotion landingGearAction = NOMOVE;
 triStateMotion landingGearHatchAction = NOMOVE;
 
+const byte NUMBEROFSERVOS = 4;
+const int MAXSERVOSPEEDDEGS[NUMBEROFSERVOS] = {2, 10, 100, 1}; // Maximum speed of the servos in degrees per sec
+const int MAXSERVOACCDEGSS[NUMBEROFSERVOS] = {10, 10, 10, 10}; // Maximum acceleration of the servos in degrees per sec2
+int servoTargetPos[NUMBEROFSERVOS] = {0, 0, 0, 0}; //The initial state of the servos
+float servoActualPos[NUMBEROFSERVOS];
+
 //---------------------------------------------------------------------------------------------------------
 // SETUP
 // This block of code is only run once at the beginning
@@ -116,6 +122,11 @@ void setup() {
 
   loggerTimer.Start();
   servoTimer.Start();
+
+  for (int i = 0; i < NUMBEROFSERVOS; i++) {
+    servoActualPos[i] = servoTargetPos[i];
+  }
+
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -127,7 +138,7 @@ void loop() {
   // Read the receiver2 and store the values
   //-------------------------------------------------------------------------------------------------------
   for (int i = 0; i < NUMBEROFCHANNELS2; i++) {
-    channelValues[i] = receiver2.ReadChannel(i);
+    channelValues[i] = servoTargetPos[i];
   }
 
   //-------------------------------------------------------------------------------------------------------
@@ -141,41 +152,18 @@ void loop() {
   stopLogger = (loggerSwitchState > loggerSwitchStatePrev);   //if new state is HIGH (1) and old state is LOW (1)
   loggerSwitchStatePrev = loggerSwitchState; //update the previous state for the next loop
 
-  // Read switch SWB (high/mid/low) for landing gear
-  landingGearSwitchState = GetPPMZone(channelValues[LANDINGGEARCHANNEL]);
-  if (landingGearSwitchState < landingGearSwitchStatePrev) {
-    // towards rectracted state
-    if (landingGearSwitchState == MIDSTATE) {
-      // So it was HISTATE, now pull in the gear
-      landingGearAction = MOVEUP;
-      landingGearHatchAction = NOMOVE;
-      Serial.println("Retract gear");
-    } else {
-      landingGearAction = NOMOVE;
-      landingGearHatchAction = MOVEUP;
-      Serial.println("Close hatch");
-    }
-  }
-  if (landingGearSwitchState > landingGearSwitchStatePrev) {
-    // towards extended state
-    if (landingGearSwitchState == MIDSTATE) {
-      // So it was LOSTATE, now extent in the gear
-      landingGearAction = NOMOVE;
-      landingGearHatchAction = MOVEDOWN;
-      Serial.println("Open hatch");
-    } else {
-      landingGearAction = MOVEDOWN;
-      landingGearHatchAction = NOMOVE;
-      Serial.println("Extend gear");
-    }
-  }
-  landingGearSwitchStatePrev = landingGearSwitchState; //update the previous state for the next loop
+  // Read switch SWB (high/mid/low) for landing gear. 
+  HandleLandingGearSwitch(); //Update of landingGearAction and landingGearHatchAction
 
   //-------------------------------------------------------------------------------------------------------
   // Handle the motors
   //-------------------------------------------------------------------------------------------------------
-
-
+  servoTargetPos[0] = map(channelValues[0], 600, 2100, 0, 180);
+  // UpdateServos();
+  // Serial.print(servoTargetPos[0]);
+  // Serial.print("; ");
+  // Serial.print(servoActualPos[0]);
+  
 
   //-------------------------------------------------------------------------------------------------------
   // Start or stop logger
@@ -209,7 +197,7 @@ void loop() {
   // Check if it is time to log the data
   if (loggerTimer.LoopTimePassed()) {
     String myString = myLogger.UpdateSensors();  // Updates all connected sensors and generates a string of all sensor values;
-    Serial.print(myString);                      // Writing to the Serial Monitor will sometimes take more than 100 ms. So print to screen only when you have a slow update rate.
+    //Serial.print(myString);                      // Writing to the Serial Monitor will sometimes take more than 100 ms. So print to screen only when you have a slow update rate.
     myLogger.WriteLogger();                      // Only writes to logger if myLogger. IsLogging is true;
   }
 
@@ -244,4 +232,52 @@ triStateSwitch GetPPMZone(int value) {
 
 bool IsPPMHigh(int value) {
   return (value < PPMTHRESHMID);
+}
+
+void HandleLandingGearSwitch(){
+  landingGearSwitchState = GetPPMZone(channelValues[LANDINGGEARCHANNEL]);
+  if (landingGearSwitchState < landingGearSwitchStatePrev) {
+    // towards rectracted state
+    if (landingGearSwitchState == MIDSTATE) {
+      // So it was HISTATE, now pull in the gear
+      landingGearAction = MOVEUP;
+      landingGearHatchAction = NOMOVE;
+      Serial.println("Retract gear");
+    } else {
+      landingGearAction = NOMOVE;
+      landingGearHatchAction = MOVEUP;
+      Serial.println("Close hatch");
+    }
+  }
+  if (landingGearSwitchState > landingGearSwitchStatePrev) {
+    // towards extended state
+    if (landingGearSwitchState == MIDSTATE) {
+      // So it was LOSTATE, now extent in the gear
+      landingGearAction = NOMOVE;
+      landingGearHatchAction = MOVEDOWN;
+      Serial.println("Open hatch");
+    } else {
+      landingGearAction = MOVEDOWN;
+      landingGearHatchAction = NOMOVE;
+      Serial.println("Extend gear");
+    }
+  }
+  landingGearSwitchStatePrev = landingGearSwitchState; //update the previous state for the next loop
+
+}
+
+void UpdateServos(){
+  for (int i = 0; i < NUMBEROFSERVOS; i++) {
+    float posError = servoTargetPos[i] - servoActualPos[i];
+    float maxStep = MAXSERVOSPEEDDEGS[i]*LOOPTIMESERVOMS/1000.0; //maximumStep a servo can make in a loopcycle
+    if (posError > maxStep) {
+      posError = maxStep;
+    }
+    if (posError < -maxStep) {
+      posError = -maxStep;
+    }
+    servoActualPos[i] = servoActualPos[i]+posError;
+
+  }
+
 }
