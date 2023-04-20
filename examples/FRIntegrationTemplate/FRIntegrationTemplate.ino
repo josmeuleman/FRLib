@@ -138,7 +138,7 @@ void loop() {
   // Read the receiver2 and store the values
   //-------------------------------------------------------------------------------------------------------
   for (int i = 0; i < NUMBEROFCHANNELS2; i++) {
-    channelValues[i] = receiver2.ReadChannel(i)[i];
+    channelValues[i] = receiver2.ReadChannel(i);
     Serial.print(channelValues[i]);
     Serial.print("; ");
   }
