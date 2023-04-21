@@ -18,7 +18,7 @@
 //
 // 2023-04-20, Jos Meuleman, Inholland Aeronautical & Precision Engineering, The Netherlands
 
-
+#include <ESP32Servo.h>
 #include <FRTimer.h>
 #include <FRLogger.h>
 #include <FRLED.h>
@@ -33,24 +33,28 @@ typedef enum triStateSwitch {
   HISTATE
 };
 
+const byte NUMBEROFSERVOS = 4;      // Number of servos 
 const int I2C_SDA = 33;             // The data pin for I2C communication
 const int I2C_SCL = 32;             // The clock pin for I2C communcation
 const int PINSWITCH = 22;           // The pin number for he button to start and stop logging
 const int PINLED = 21;              // The pin number for the LED
 const int PINAD = 34;               // Analog input pin number
+const int PINSERVO[NUMBEROFSERVOS] = {25, 26, 27, 14}; // Servo Channels
+const int PINPPM2 = 4;              // PM2 input pint
 const int LOOPTIMELOGGERMS = 100;   // Loop time for reading the AD channel in milliseconds
 const int LOOPTIMESERVOMS = 10;     // Loop time for reading the AD channel in milliseconds
-const int PINPPM2 = 4;              // PM2 input pint
 const int NUMBEROFCHANNELS2 = 8;    // Number of Channels of Receiver2
+
 
 // Create all objects
 Timer loggerTimer(LOOPTIMELOGGERMS);  // Timer object for the clock
 Timer servoTimer(LOOPTIMESERVOMS);    // Timer object for the clock
 
-Logger myLogger;                   // Logger object for logging sensors to the SD
-Button myButton(PINSWITCH, true);  // Create a button object with the given pin. True for an inverted button, false for a normal button
-LED myLed(PINLED);                 // Create a led object with the given pin.
-MPU6050Manager myMPU;              // Make an object for the sensor manager for the MPU6050 (accelerometer and gyro)
+Logger myLogger;                    // Logger object for logging sensors to the SD
+Button myButton(PINSWITCH, true);   // Create a button object with the given pin. True for an inverted button, false for a normal button
+LED myLed(PINLED);                  // Create a led object with the given pin.
+MPU6050Manager myMPU;               // Make an object for the sensor manager for the MPU6050 (accelerometer and gyro)
+Servo myServo[NUMBEROFSERVOS];      // create a servo object
 
 PPMReceiverManager receiver2(PINPPM2, NUMBEROFCHANNELS2);  // Create a PPM receiver object with given pin and number of channels
 int channelValues[NUMBEROFCHANNELS2];
@@ -72,8 +76,8 @@ const int PPMTHRESHMID = 1100;
 const int PPMTHRESHHIGH = 1350;
 
 // States for starting and stopping the logger
-bool loggerSwitchState = false;
-bool loggerSwitchStatePrev = false;
+bool loggerSwitchState = HIGH;
+bool loggerSwitchStatePrev = HIGH;
 bool startLogger = false;
 bool stopLogger = false;
 
@@ -81,16 +85,16 @@ bool stopLogger = false;
 triStateSwitch landingGearSwitchState;
 triStateSwitch landingGearSwitchStatePrev;
 
-const byte NUMBEROFSERVOS = 4;
+
 const byte SERVOLANDINGGEAR = 0;        // the servo number of the landing gear
 const byte SERVOLANDINGHATCH = 1;   // the servo number of the landing gear hatch
 const int MAXSERVOSPEEDDEGS[NUMBEROFSERVOS] = {30, 30, 100, 100}; // Maximum speed of the servos in degrees per sec
 int servoTargetPos[NUMBEROFSERVOS] = {0, 0, 0, 0}; //The initial state of the servos
 float servoActualPos[NUMBEROFSERVOS];
-const int SERVOLANDINGGEARPOSEXTENDED = 90;
-const int SERVOLANDINGGEARPOSRETRACTED = -90;
-const int SERVOLANDINGHATCHPOSOPEN = 90;
-const int SERVOLANDINGHATCHPOSCLOSED = -90;
+const int SERVOLANDINGGEARPOSEXTENDED = 180;
+const int SERVOLANDINGGEARPOSRETRACTED = 0;
+const int SERVOLANDINGHATCHPOSOPEN = 180;
+const int SERVOLANDINGHATCHPOSCLOSED = 0;
 
 
 
@@ -99,6 +103,7 @@ const int SERVOLANDINGHATCHPOSCLOSED = -90;
 // This block of code is only run once at the beginning
 //---------------------------------------------------------------------------------------------------------
 void setup() {
+  myLed.SetOff();
   Serial.begin(9600);  // Start the serial communciation
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
@@ -117,6 +122,10 @@ void setup() {
 
   loggerTimer.Start();
   servoTimer.Start();
+
+  for (int i=0; i<NUMBEROFSERVOS; i++) {
+    myServo[i].attach(PINSERVO[i]);
+  }
 
   // Starting pos for servos
   servoTargetPos[SERVOLANDINGGEAR] = SERVOLANDINGGEARPOSEXTENDED;
@@ -236,7 +245,7 @@ triStateSwitch GetPPMZone(int value) {
 }
 
 bool IsPPMHigh(int value) {
-  return (value < PPMTHRESHMID);
+  return (value < PPMTHRESHMID); // if value is less than the mid threshold, the switch is HIGH (true)
 }
 
 void HandleLandingGearSwitch(){
@@ -283,7 +292,10 @@ void UpdateServos(){
       posError = -maxStep;
     }
     servoActualPos[i] = servoActualPos[i]+posError;
-    //To be done: Write the rounded off setpoint to the servo motor
+
+    // Write the rounded off setpoint to the servo motor
+    myServo[i].write(int(servoActualPos[i]));
+    
   }
 
 }
